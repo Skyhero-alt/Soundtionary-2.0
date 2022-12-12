@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Next.js is a popular framework for building server-rendered React applications. It includes built-in support for web sockets, making it easy to set up and use web sockets in your Next.js app.
 
-## Getting Started
+To use web sockets in a Next.js app, you can use the WebSocket class from the ws package. This class provides an API for creating and managing web socket connections.
 
-First, run the development server:
+Here's an example of how you might use the WebSocket class in a Next.js app:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Copy code
+import React, { useState } from 'react'
+import { WebSocket } from 'ws'
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+function MyNextJsApp() {
+const [data, setData] = useState(null)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+const ws = new WebSocket('wss://my-web-socket-server.com')
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+ws.onopen = () => {
+console.log('Web socket connection opened!')
+}
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+ws.onmessage = (event) => {
+setData(event.data)
+}
 
-## Learn More
+return (
+<div>
+{ data ? <p>Received data: {data}</p> : <p>No data received yet</p> }
+</div>
+)
+}
+In this example, the MyNextJsApp component creates a new WebSocket instance and sets up event listeners for the onopen and onmessage events. When the web socket connection is opened, a message is logged to the console. When a message is received, the onmessage event listener updates the component's state with the data from the message.
 
-To learn more about Next.js, take a look at the following resources:
+You can then use the data in your component to display it or use it in some other way. For example, you might use the data to update a chart or table in real time.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+I hope this helps! Let me know if you have any other questions.
