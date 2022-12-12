@@ -1,22 +1,20 @@
-import React, { useState } from "react";
-import { WebSocket } from "ws";
+import { useEffect } from "react";
+import { io } from "Socket.IO-client";
+let socket;
 
-export default function mySocket() {
-  const [data, setData] = useState(null);
+const MySocket = () => {
+  useEffect(() => socketInitializer(), []);
 
-  const ws = new WebSocket("wss://localhost:3000");
+  const socketInitializer = async () => {
+    await fetch("/api/server");
+    socket = io();
 
-  ws.onopen = () => {
-    console.log("Web socket connection opened!");
+    socket.on("connect", () => {
+      console.log("connected");
+    });
   };
 
-  ws.onmessage = (event) => {
-    setData(event.data);
-  };
+  return null;
+};
 
-  return (
-    <div>
-      {data ? <p>Received data: {data}</p> : <p>No data received yet</p>}
-    </div>
-  );
-}
+export default MySocket;
