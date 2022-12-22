@@ -1,20 +1,27 @@
 import { io } from "socket.io-client";
-import React from "react";
+import React, { useState, useRef } from "react";
+import { useRouter } from "next/router";
 
 export default function Server() {
   // let socket = null;
+  let name = null;
+  const inpRef = useRef();
+  const router = useRouter();
+  const route = router.query;
+
   return (
     <div>
-      {/* {socket.connected ? <h1>Connected</h1> : <h2>Not connected</h2>} */}
+      <input ref={inpRef} placeholder="enter name" />
+
       <button
         onClick={() => {
+          name = inpRef.current.value;
+          console.log(name);
           let socket = io("http://localhost:8000");
-          socket.on("connect", (socket) => {
-            console.log("Yahooo");
-          });
+          socket.emit("join server", { name, route });
         }}
       >
-        Lol button
+        Join
       </button>
     </div>
   );
