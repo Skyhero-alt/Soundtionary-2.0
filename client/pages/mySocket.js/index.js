@@ -11,9 +11,15 @@ export default function Server() {
 
   return (
     <div>
-      <input ref={inpRef} placeholder="enter name" />
+      {console.log("wakao")}
+      <input
+        ref={inpRef}
+        placeholder="enter name"
+        className="input input-bordered input-success w-full max-w-xs m-5"
+      />
 
       <button
+        className="btn btn-outline btn-accent m-5"
         onClick={() => {
           name = inpRef.current.value;
           console.log(name);

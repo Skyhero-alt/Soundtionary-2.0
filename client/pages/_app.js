@@ -1,7 +1,11 @@
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} data-theme="dark" />;
+  return (
+    <div data-theme="dark">
+      <Component {...pageProps} />
+    </div>
+  );
 }
 
 export default MyApp;
